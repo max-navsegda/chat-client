@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Client</string>
+    <string name="enter">Enter</string>
+    <string name="password">phone</string>
+    <string name="phone">phone</string>
+    <string name="hello_world">hi</string>
+    <string name="log_out">Log out</string>
+    <string name="menu">Menu</string>
+</resources>
