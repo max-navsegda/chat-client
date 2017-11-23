@@ -10,7 +10,7 @@
         android:name="max.com.client.fragments.ListFragment"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        tools:layout="@layout/lst_fragment" />
+        tools:layout="@layout/list_fragment" />
 
     <fragment
         android:layout_width="match_parent"
