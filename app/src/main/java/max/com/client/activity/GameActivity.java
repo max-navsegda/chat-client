@@ -1,13 +1,14 @@
 package max.com.client.activity;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -22,7 +23,6 @@ import butterknife.OnClick;
 import max.com.client.R;
 import max.com.client.adapters.RecyclerAdapter;
 import max.com.client.events.UpdateEvent;
-import max.com.client.fragments.Menu;
 import max.com.client.model.Message;
 import max.com.client.network.NetworkService;
 import max.com.client.utils.Settings;
@@ -31,7 +31,7 @@ import max.com.client.utils.Settings;
  * Created by Maxim on 10/9/2017.
  */
 
-public class GameActivity extends Activity {
+public class GameActivity extends AppCompatActivity {
 
     RecyclerAdapter recyclerAdapter;
     EditText message;
@@ -42,6 +42,18 @@ public class GameActivity extends Activity {
     RecyclerView recyclerView;
 
     public static ArrayList<Message> list = new ArrayList<>();
+
+    @Subscribe
+    public void update(UpdateEvent updateEvent) {
+        recyclerAdapter.notifyDataSetChanged();
+    }
+
+    public void setData() {
+        try {
+            NetworkService.findMessage(userPhone, "1111");
+        } catch (Exception e) {
+        }
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,7 +81,6 @@ public class GameActivity extends Activity {
         setData();
     }
 
-    @OnClick(R.id.button)
     public void logOut() {
         LoginActivity.editor = LoginActivity.sharedPreferences.edit();
         LoginActivity.editor.clear();
@@ -77,17 +88,20 @@ public class GameActivity extends Activity {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
-
-    @Subscribe
-    public void update(UpdateEvent updateEvent) {
-        recyclerAdapter.notifyDataSetChanged();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
     }
 
-    public void setData() {
-        try {
-            NetworkService.findMessage(userPhone, "1111");
-        } catch (Exception e) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id){
+            case R.id.logOut:
+                logOut();
         }
+        return super.onOptionsItemSelected(item);
     }
 }
 
