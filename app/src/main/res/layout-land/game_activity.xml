@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <fragment
+        android:id="@+id/list_fragment"
+        android:name="max.com.client.fragments.ListFragment"
+        android:layout_width="400dp"
+        android:layout_height="150dp"
+        tools:layout="@layout/lst_fragment"
+        android:layout_above="@+id/input_fragment"
+        android:layout_alignParentTop="true" />
+
+    <fragment
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/rate_fragment"
+        android:name="max.com.client.fragments.RateFragment"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:layout_toRightOf="@+id/list_fragment"
+        android:layout_above="@+id/input_fragment"
+        tools:layout="@layout/rate_fragment"/>
+
+    <fragment
+        android:id="@+id/input_fragment"
+        android:name="max.com.client.fragments.InputFragments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:layout="@layout/input_fragment"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+</RelativeLayout>
