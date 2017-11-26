@@ -40,6 +40,7 @@ public class GameActivity extends AppCompatActivity {
     ImageView black;
     String userPhone;
     RecyclerView recyclerView;
+    final static String nameVariableKey = "NAME_VARIABLE";
 
     public static ArrayList<Message> list = new ArrayList<>();
 
@@ -88,6 +89,7 @@ public class GameActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
@@ -97,12 +99,27 @@ public class GameActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        switch (id){
+        switch (id) {
             case R.id.logOut:
                 logOut();
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        String s = message.getText().toString();
+        outState.putString(nameVariableKey, s);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        String s1 = savedInstanceState.getString(nameVariableKey);
+        message.setText(s1);
+    }
+
 }
 
 
