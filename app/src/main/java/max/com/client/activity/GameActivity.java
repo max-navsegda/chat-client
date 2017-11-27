@@ -25,6 +25,7 @@ import max.com.client.adapters.RecyclerAdapter;
 import max.com.client.events.UpdateEvent;
 import max.com.client.model.Message;
 import max.com.client.network.NetworkService;
+import max.com.client.services.UpdateDataService;
 import max.com.client.utils.Settings;
 
 /**
@@ -38,23 +39,10 @@ public class GameActivity extends AppCompatActivity {
     Button send;
     ImageView white;
     ImageView black;
-    String userPhone;
+    static String userPhone;
     RecyclerView recyclerView;
     final static String nameVariableKey = "NAME_VARIABLE";
-
     public static ArrayList<Message> list = new ArrayList<>();
-
-    @Subscribe
-    public void update(UpdateEvent updateEvent) {
-        recyclerAdapter.notifyDataSetChanged();
-    }
-
-    public void setData() {
-        try {
-            NetworkService.findMessage(userPhone, "1111");
-        } catch (Exception e) {
-        }
-    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,6 +60,7 @@ public class GameActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         setData();
         recyclerAdapter.notifyDataSetChanged();
+        startService(new Intent(this, UpdateDataService.class));
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
     }
@@ -80,6 +69,13 @@ public class GameActivity extends AppCompatActivity {
     public void send() {
         NetworkService.sendMessage(userPhone, "1111", message.getText().toString());
         setData();
+    }
+
+    public  static  void setData() {
+        try {
+            NetworkService.findMessage(userPhone, "1111");
+        } catch (Exception e) {
+        }
     }
 
     public void logOut() {
@@ -120,6 +116,10 @@ public class GameActivity extends AppCompatActivity {
         message.setText(s1);
     }
 
+    @Subscribe
+    public void update(UpdateEvent updateEvent) {
+        recyclerAdapter.notifyDataSetChanged();
+    }
 }
 
 
